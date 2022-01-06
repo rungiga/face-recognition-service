@@ -1,0 +1,5 @@
+py-postgresql
+face_recognition
+opencv-python
+flask_restx
+gunicorn
