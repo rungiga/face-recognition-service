@@ -90,7 +90,7 @@ class Add(Resource):
                         db.execute(query)
 
                     #cv2.imwrite("./.faces/aligned_face_{}_{}_crop.jpg".format(file_name.replace('/', '_'), i), crop)
-                return "Succes, Image added for {}".format(label), 200
+                return "Success, Image added for {}".format(label), 200
         else:
             return "Face label {} already existant".format(label), 504
 
