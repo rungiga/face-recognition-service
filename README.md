@@ -8,8 +8,17 @@ Please follow these steps for proper installation with the appropriate modificat
 
 * Clone this repository: `git clone https://github.com/gost-sniper/FD_Docker`
 * Enter the local repo folder : `cd FD_Docker`
-* Edit the docker-compose file with the appropriate hosts and ports
-* Build and run the Docker image/container : `sudo docker-compose up --build -d`
+* Build & run the Postgresql container : `sudo docker run --name postgres-db -p 5432:5432 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=user -e POSTGRES_DB=db --net=bridge -d postgres:9.6` 
+* run these 2 commands to get the db host:
+  ```bash
+  $ export DB_ID=$(sudo docker inspect --format="{{.Id}}" postgres-db)
+  $ export DAT_IP=$(sudo docker network inspect bridge | jq -r '.[0]["Containers"]["'$DB_ID'"]["IPv4Address"]' | cut -d'/' -f 1)
+  ```
+
+* Build the web app image : `sudo docker build --build-arg APP_PORT=8080 --build-arg APP_HOST="0.0.0.0" -t fd_web .
+`
+*  run the Docker container : `sudo docker run --name fd_web_c -p 8080:8080 -e POSTGRES_USER=user -e POSTGRES_PASSWORD=user -e POSTGRES_DB=db -e DAT_HOST=$DAT_IP --net=bridge -d fd_web
+`
 
 Now we should have our model deployed at `0.0.0.0:8080` (or `localhost:8080` for windows users)
 

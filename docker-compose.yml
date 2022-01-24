@@ -13,8 +13,6 @@ services:
   db:
     image: postgres:9.6
     environment:
-      #bind-address: 0.0.0.0:5432
-
       POSTGRES_PASSWORD: user
       POSTGRES_USER: user
       POSTGRES_DB: db

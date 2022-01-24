@@ -16,6 +16,12 @@ import ast
 from werkzeug.datastructures import FileStorage
 from db import setup_db
 
+DAT_HOST = os.environ.get('DAT_HOST', "localhost") 
+DAT_PORT = os.environ.get('DAT_PORT', 5432) 
+DB_USER = os.environ.get('DB_USER', "user") 
+DB_PASSWORD = os.environ.get('DB_PASSWORD', "user") 
+POSTGRES_DB = os.environ.get('POSTGRES_DB', 'db')
+
 app = Flask(__name__)
 api = Api(app, doc='/docs', version='1.0', 
           title=' Wrapper for a Published Object-Detection Model',
@@ -38,7 +44,7 @@ search_parser.add_argument('confidence', type=float, required=True)
 
 setup_db()
 print('DB Initialized')
-db = postgresql.open('pq://user:user@db:5432/db')
+db = postgresql.open(f'pq://{DB_USER}:{DB_PASSWORD}@{DAT_HOST}:{DAT_PORT}/{POSTGRES_DB}')
 
 @api.route('/api/face/create', doc={
         "description": "Add a face to the database",
