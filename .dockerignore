@@ -1,0 +1,8 @@
+demo
+test_images
+valid_images
+Dockerfile
+.gitignore
+.python_version
+docker-compose.yml
+README.md
